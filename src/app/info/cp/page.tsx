@@ -1,20 +1,22 @@
 "use client"
-import { useParams } from "next/navigation"
+import { usePatientStore } from "@/libs/store";
 import { useState } from "react";
 
 const Patient = () => {
-    const s = useParams();
-    const [select, setSelect] = useState<"TREATMENTS" | "ALLERGIES" | "DATA" | "GRAPH" | "FILES">("GRAPH");
-    const data_data = ["SUGAR", "BP", "RBC", "WBC", "HB", "PLATLETS", "ESR", "MCV", "HEART RATE", "TSH", "Na", "K", "VIT D", "CHOLOESTROL"];
-    const id = s["id"]
-    console.log(id);
+    const [select, setSelect] = useState<"TREATMENTS" | "ALLERGIES" | "DATA" | "GRAPH" | "FILES">("DATA");
+    const data_data = ["SUGAR", "BP", "RBC", "WBC", "HB", "PLATELETS", "ESR", "MCV", "HEART RATE", "Na", "K", "VIT D", "CHOLESTROL"];
+    const data_range = ["100 to 125 mg/dL", "80/120 mmHg", "4.7 and 6.1 million/uL", "4.500K - 11K /uL", "13.8 to 17.2 (g/dL)", "150,000  450,000 platelets (K/μL)", "10 - 20 mm/hr", "80 -100 fl", "60 - 100", "135 - 145 meql/l", "3.6 - 5.2", "20 - 40 ng/ml", "200mg/dl"]
 
+    const usePatientData = usePatientStore((i) => i.data);
+    console.log(usePatientData);
+    const dob = new Date(usePatientData["dob"]).toDateString()
+    console.log(usePatientData);
     return (
         <div className="w-full h-full flex flex-col items-center justify-start p-10">
             <div className="w-full flex flex-col sm:flex-row items-start justify-between">
                 <div className="w-full sm:w-2/6 flex flex-col items-center justify-center">
                     <img className="object-cover rounded-full w-[200px] h-[200px] shadow-lg" alt="patient-profile-picture"
-                        src="https://assets.shortpedia.com/uploads/2021/04/15/1618470640.jpg" />
+                        src={usePatientData["img_url"]} />
                     <button className="mt-4 underline text-blue-600 hover:text-blue-800"> Edit </button>
                 </div>
                 <div className="rounded-md w-full sm:w-4/6 p-6 bg-white shadow-md">
@@ -22,39 +24,39 @@ const Patient = () => {
                     <div>
                         <div className="flex flex-row items-center justify-start mt-4">
                             <div className="font-bold"> NAME: </div>
-                            <div className="ml-2 text-gray-700"> Keerthy Suresh </div>
+                            <div className="ml-2 text-gray-700"> {usePatientData["name"]} </div>
                         </div>
                         <div className="w-full flex flex-row flex-wrap">
                             <div className="flex flex-row items-center justify-start mt-2 mr-10">
                                 <div className="font-bold"> AGE: </div>
-                                <div className="ml-2 text-gray-700"> 30 </div>
+                                <div className="ml-2 text-gray-700"> {usePatientData["age"]} </div>
                             </div>
                             <div className="flex flex-row items-center justify-start mt-2 mr-10">
                                 <div className="font-bold"> GENDER: </div>
-                                <div className="ml-2 text-gray-700"> Female </div>
+                                <div className="ml-2 text-gray-700"> {usePatientData["gender"]} </div>
                             </div>
                             <div className="flex flex-row items-center justify-start mt-2 mr-10">
                                 <div className="font-bold"> DOB: </div>
-                                <div className="ml-2 text-gray-700"> 69/69/69 </div>
+                                <div className="ml-2 text-gray-700"> {dob} </div>
                             </div>
                         </div>
                         <div className="w-full flex flex-row flex-wrap">
                             <div className="flex flex-row items-center justify-start mt-2 mr-10">
                                 <div className="font-bold"> WEIGHT: </div>
-                                <div className="ml-2 text-gray-700"> 🌝 </div>
+                                <div className="ml-2 text-gray-700"> {usePatientData["weight"]} </div>
                             </div>
                             <div className="flex flex-row items-center justify-start mt-2 mr-10">
                                 <div className="font-bold"> HEIGHT: </div>
-                                <div className="ml-2 text-gray-700"> 🌚 </div>
+                                <div className="ml-2 text-gray-700"> {usePatientData["height"]} </div>
                             </div>
                             <div className="flex flex-row items-center justify-start mt-2 mr-10">
                                 <div className="font-bold"> BMI: </div>
-                                <div className="ml-2 text-gray-700"> XXX </div>
+                                <div className="ml-2 text-gray-700"> {Math.trunc(usePatientData["weight"] * 10000 / (usePatientData["height"] * usePatientData["height"]))} </div>
                             </div>
                         </div>
                         <div className="flex flex-row items-center justify-start mt-2">
                             <div className="font-bold"> ADDRESS: </div>
-                            <div className="ml-2 text-gray-700"> Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat. </div>
+                            <div className="ml-2 text-gray-700"> {usePatientData["address"]} </div>
                         </div>
                     </div>
                 </div>
@@ -93,16 +95,17 @@ const Patient = () => {
                                         <th className="text-center">Type</th>
                                         <th className="text-center">Condition</th>
                                     </tr>
-                                    {Array(15).fill(0).map((_, i) => (
+                                    {usePatientData["treatments"].map((value: any, i: number) => (
                                         <tr style={{ background: i % 2 ? "#f1f5f9" : "white" }} className="border-[2px] border-black">
-                                            <td className="text-center">Treatment {i + 1}</td>
-                                            <td className="text-center">Office visit</td>
-                                            <td className="flex flex-col items-center justify-center"><div className="w-[20px] h-[20px] rounded-full bg-red-400" /></td>
+                                            <td className="text-center">{value["treatment_name"]}</td>
+                                            <td className="text-center">{value["type"]}</td>
+                                            <td className="flex flex-col items-center justify-center">{value["condition"] <= 1 ? <div className="w-[20px] h-[20px] rounded-full bg-green-400" /> : value["condition"] < 3 ? <div className="w-[20px] h-[20px] rounded-full bg-yellow-400" /> : <div className="w-[20px] h-[20px] rounded-full bg-red-400" />}</td>
                                         </tr>
                                     ))}
                                 </table>
                             </div>
-                            <a href={id + "/timeline"}><button className="px-4 py-2 rounded bg-blue-500 hover:bg-blue-600 text-white font-bold mt-10">View timeline</button></a>
+                            <a href={"cp/timeline"}><button className="px-4 py-2 rounded bg-blue-500 hover:bg-blue-600 text-white font-bold mt-10">View timeline</button></a>
+                            {localStorage.getItem("d_token") && <a href={"cp/timeline/add"}><button className="px-4 ml-3 py-2 rounded bg-blue-500 hover:bg-blue-600 text-white font-bold mt-4">Add treatment</button></a>}
                         </div>}
                         {select === "ALLERGIES" && <div className="w-full h-full bg-white p-6 rounded-md shadow-md">
                             <div className="list-decimal font-black text-2xl text-gray-800 mb-4"> CONDITIONS </div>
@@ -113,11 +116,11 @@ const Patient = () => {
                                         <th className="text-center">Onset Date</th>
                                         <th className="text-center">Severity</th>
                                     </tr>
-                                    {Array(15).fill(0).map((_, i) => (
-                                        <tr style={{ background: i % 2 ? "#f1f5f9" : "white" }} className="border-[2px] border-black">
-                                            <td className="text-center">Type {i + 1}</td>
-                                            <td className="text-center">Onset Date {i + 1}</td>
-                                            <td className="flex flex-col items-center justify-center"><div className="w-[20px] h-[20px] rounded-full bg-red-400" /></td>
+                                    {usePatientData["conditions"].map((value: any, i: number) => (
+                                        <tr style={{ background: (i % 2) ? "#f1f5f9" : "white" }} className="border-[2px] border-black">
+                                            <td className="text-center">{value["value"]}</td>
+                                            <td className="text-center">{new Date(value["onset"]).toDateString()}</td>
+                                            <td className="flex flex-col items-center justify-center">{value["severity"] <= 1 ? <div className="w-[20px] h-[20px] rounded-full bg-green-400" /> : value["severity"] < 3 ? <div className="w-[20px] h-[20px] rounded-full bg-yellow-400" /> : <div className="w-[20px] h-[20px] rounded-full bg-red-400" />}</td>
                                         </tr>
                                     ))}
                                 </table>
@@ -131,10 +134,10 @@ const Patient = () => {
                                         <th className="text-center">Field</th>
                                         <th className="text-center">Value/Range</th>
                                     </tr>
-                                    {Array(14).fill(0).map((_, i) => (
+                                    {Array(13).fill(0).map((_, i) => (
                                         <tr style={{ background: i % 2 ? "#f1f5f9" : "white" }} className="border-[2px] border-black">
                                             <td className="text-center">{data_data[i]}</td>
-                                            <td className="text-center">{data_data[i]} - value</td>
+                                            <td className="text-center">{data_data[i] === "HEART RATE" ? usePatientData["heart_rate"] : data_data[i] === "VIT D" ? usePatientData["vit_d"] : usePatientData[data_data[i]?.toLowerCase()]} ({data_range[i]})</td>
                                         </tr>
                                     ))}
                                 </table>

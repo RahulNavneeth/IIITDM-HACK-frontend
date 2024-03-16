@@ -3,7 +3,11 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import MessageProvider from "@/libs/providers/message";
 import { usePathname } from "next/navigation"
-import { useCookies } from 'next-client-cookies';
+import { useEffect } from "react";
+import { API_URL } from "@/libs/constants";
+import axios from "axios";
+import { usePatientStore } from "@/libs/store";
+import { Logout } from "@/libs/components";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,11 +16,28 @@ export default function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const cookies = useCookies()
     const pathname = usePathname()
-    if (!cookies.get("p_token") && !cookies.get("d_tokken") && !cookies.get("h_token") && pathname !== "/login" && pathname !== "/register" && pathname !== "/doctor/register" && pathname !== "/doctor/login" && pathname !== "/hospital/register" && pathname !== "/hospital/login" && pathname !== "/admin/login" && pathname !== "/signup") {
-        window.location.href = "/login"
-    }
+    const usePatientData = usePatientStore((i) => i.setData);
+    useEffect(() => {
+        const GET = async () => {
+            if ("p_token" in localStorage) {
+                const { data } = await axios.post(API_URL + "/patient/get-patient", {
+                    type: "P",
+                    "p_token": localStorage.getItem("p_token")
+                })
+                usePatientData(data);
+                return;
+            }
+            if ("d_token" in localStorage) {
+                if (pathname !== "/info") window.location.href = "/info";
+                return;
+            }
+            if (pathname !== "/login" && pathname !== "/signup") {
+                window.location.href = "/login";
+            }
+        }
+        GET();
+    }, []);
     return (
         <html lang="en">
             <head>
@@ -25,6 +46,7 @@ export default function RootLayout({
             <body className={inter.className}>
                 <div className="w-screen h-screen">
                     <MessageProvider />
+                    <Logout />
                     {children}
                 </div>
             </body>

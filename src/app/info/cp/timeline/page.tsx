@@ -1,16 +1,10 @@
 "use client"
-import { useParams } from "next/navigation"
-import { useEffect, useState } from "react";
+import { usePatientStore } from "@/libs/store";
+import { useState } from "react";
 
 const MedicalTimeline = () => {
-    const [summary, setSummary] = useState<Array<[string, boolean]>>(Array(5).fill(["", false]));
-    const params = useParams();
-    const patientId = params["id"];
-    console.log(patientId);
-
-    useEffect(() => {
-        console.log(summary);
-    }, [summary]);
+    const usePatientData = usePatientStore((i) => i.data);
+    const [summary, setSummary] = useState<Array<[string, boolean]>>(Array(usePatientData["treatments"].length).fill(["", false]));
 
     return (
         <div className="w-full h-full p-10 flex flex-col items-center justify-start bg-gray-50">
@@ -18,25 +12,25 @@ const MedicalTimeline = () => {
             <div className="flex flex-col w-full">
                 <section>
                     <div className="flex flex-col gap-4">
-                        {Array(5).fill(0).map((_, i) => (
+                        {usePatientData["treatments"].map((value: any, i: number) => (
                             <div className="flex flex-col bg-white rounded-lg shadow p-4">
                                 <div className="flex justify-between items-center">
-                                    <h3 className="font-semibold">Date Range: 69/69/69 - 420/420/420</h3>
-                                    <span className="text-sm text-gray-500">Dr. Johnny sins</span>
+                                    <h3 className="font-semibold">Date Range: {new Date(value["in_time"]).toDateString()} - {new Date(value["out_time"]).toDateString()}</h3>
+                                    <span className="text-sm text-gray-500">Doctor ID - {value["doctor_id"]}</span>
                                 </div>
                                 <div className="mt-2">
-                                    <p><strong>Reason for Visit:</strong> Example reason here</p>
-                                    <div><strong>Patient Diseases and Allergies tested:</strong>
-                                        <ol className="pl-5 list-decimal">
-                                            {Array(5).fill(0).map((_, i) => (
-                                                <li key={i}>Disease/Allergy</li>
-                                            ))}
-                                        </ol>
-                                    </div>
+                                    <p><strong>Pioneers:</strong> {
+                                        value["pioneers"].map((v: any, i: number) => (
+                                            <span key={i} className="text-blue-500">{v}{i !== value["pioneers"].length - 1 && ","} </span>
+                                        ))
+                                    }</p>
+                                    <p><strong>Type:</strong> {value["type"]}</p>
                                     {summary[i][1] && <p><strong>Summary:</strong> {summary[i][0].length > 0 ? "WATHA" : "Generating..."}</p>}
                                 </div>
                                 <div className="flex flex-row">
-                                    <button className="mt-4 w-full py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-bold">View Files & Data</button>
+                                    <button onClick={() => {
+                                        window.location.href = "/info/cp/" + value["treatment_id"] + "/files";
+                                    }} className="mt-4 w-full py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-bold">View Files & Data</button>
                                     <button onClick={() => {
                                         let temp = [...summary];
                                         temp[i] = ["", true];
