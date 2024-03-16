@@ -2,7 +2,7 @@
 const nextConfig = {
     images: {
         domains: ['assets.shortpedia.com'],
-    }
+    },
 };
 
 export default nextConfig;

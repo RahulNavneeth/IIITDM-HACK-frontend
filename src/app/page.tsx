@@ -1,5 +1,5 @@
 export default function Home() {
     return (
-        <div> EHR </div>
+        <div className="w-full h-full flex flex-col items-center justify-center"> Loading... Please wait!!! </div>
     );
 }

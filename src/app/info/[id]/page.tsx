@@ -63,20 +63,20 @@ const Patient = () => {
                 <div className="font-black text-2xl text-gray-800 mb-4"> MEDICAL INFORMATION </div>
                 <div className="w-full h-full flex flex-col md:flex-row">
                     <div className="w-full md:w-2/6 h-full justify-evenly flex flex-col">
-                        <button onClick={() => setSelect("GRAPH")} className="rounded-md bg-blue-500 hover:bg-blue-600 text-white shadow-md mb-4">
-                            <div className="p-6 font-semibold"> GRAPH </div>
-                        </button>
-                        <button onClick={() => setSelect("TREATMENTS")} className="rounded-md bg-blue-500 hover:bg-blue-600 text-white shadow-md mb-4">
-                            <div className="p-6 font-semibold"> TREATMENTS </div>
+                        <button onClick={() => setSelect("DATA")} className="rounded-md bg-blue-500 hover:bg-blue-600 text-white shadow-md mb-4">
+                            <div className="p-6 font-semibold"> DATA </div>
                         </button>
                         <button onClick={() => setSelect("ALLERGIES")} className="rounded-md bg-blue-500 hover:bg-blue-600 text-white shadow-md mb-4">
                             <div className="p-6 font-semibold"> CONDITIONS </div>
                         </button>
-                        <button onClick={() => setSelect("DATA")} className="rounded-md bg-blue-500 hover:bg-blue-600 text-white shadow-md mb-4">
-                            <div className="p-6 font-semibold"> DATAS </div>
+                        <button onClick={() => setSelect("TREATMENTS")} className="rounded-md bg-blue-500 hover:bg-blue-600 text-white shadow-md mb-4">
+                            <div className="p-6 font-semibold"> TREATMENTS </div>
                         </button>
                         <button onClick={() => setSelect("FILES")} className="rounded-md bg-blue-500 hover:bg-blue-600 text-white shadow-md mb-4">
                             <div className="p-6 font-semibold"> ALL MEDICAL FILES </div>
+                        </button>
+                        <button onClick={() => setSelect("GRAPH")} className="rounded-md bg-blue-500 hover:bg-blue-600 text-white shadow-md mb-4">
+                            <div className="p-6 font-semibold"> GRAPH </div>
                         </button>
                     </div>
                     <div className="w-full md:w-4/6 ml-0 md:ml-4">

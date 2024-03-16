@@ -3,7 +3,8 @@
 import { useState } from "react";
 
 const Info = () => {
-    const [data, setData] = useState([1])
+    const [data, setData] = useState([])
+    const [message, setMessage] = useState<string>("Search patient record with email");
     return (
         <div className="w-full h-full p-10 flex flex-col items-center justify-start bg-gray-50">
             <div className="font-black text-3xl text-gray-800 mb-8">Patients data</div>
@@ -28,7 +29,7 @@ const Info = () => {
                             <div className="font-semibold text-gray-400">keerthysuresh@gmail.com</div>
                         </button>
                     </div>
-                    : <div className="w-full text-center font-semibold mt-10">0 data found</div>}
+                    : <div className="w-full text-center font-semibold mt-10">{message}</div>}
             </div>
         </div>
     )

@@ -1,16 +1,33 @@
 "use client"
 
+import { useMessageStore } from "@/libs/store";
 import { useState } from "react";
 
 const Signup = () => {
     const [page, setPage] = useState<number>(0);
+    const [email, setEmail] = useState<string>("");
+    const [pass, setPass] = useState<string>("");
+    const [c_pass, setC_Pass] = useState<string>("");
+    const [name, setName] = useState<string>("");
+    const [gender, setGender] = useState<"MALE" | "FEMALE">("MALE");
+    const [dob, setDob] = useState<string>("");
+    const [blood, setBlood] = useState<"OP" | "ON" | "AP" | "AN" | "BP" | "BN" | "ABP" | "ABN">("OP");
+    const [weight, setWeight] = useState<number>(0);
+    const [height, setHeight] = useState<number>(0);
+    const [address, setAddress] = useState<string>("");
     const [treatment, setTreatment] = useState<Array<string>>([""]);
     const [allergies, setAllergies] = useState<Array<string>>([""]);
+
+    const useMessageData = useMessageStore((i) => i.setData);
 
     const handleSubmit = () => {
         if (!page) {
             setPage(1);
         } else {
+            if (pass !== c_pass) {
+                useMessageData({ type: "error", message: "Password and Confirm Password should be same", show: true });
+                return;
+            }
             console.log("submit");
         }
     }
@@ -21,16 +38,16 @@ const Signup = () => {
                     <h1 className="text-2xl font-bold mb-8">Signup</h1>
                     {!page ?
                         <>
-                            <input type="email" placeholder="Email" className="mb-2 outline-none w-full p-4 border-2 rounded-lg border-gray-200 shadow bg-white" />
-                            <input type="password" placeholder="Password" className="mb-2 outline-none w-full p-4 border-2 rounded-lg border-gray-200 shadow bg-white" />
-                            <input type="password" placeholder="Confirm Password" className="mb-2 outline-none w-full p-4 border-2 rounded-lg border-gray-200 shadow bg-white" />
-                            <input type="text" placeholder="Name" className="mb-2 outline-none w-full p-4 border-2 rounded-lg border-gray-200 shadow bg-white" />
-                            <select className="outline-none w-full p-4 border-2 mb-2 rounded-lg border-gray-200 shadow bg-white">
+                            <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Email" className="mb-2 outline-none w-full p-4 border-2 rounded-lg border-gray-200 shadow bg-white" />
+                            <input onChange={(e) => setPass(e.target.value)} type="password" placeholder="Password" className="mb-2 outline-none w-full p-4 border-2 rounded-lg border-gray-200 shadow bg-white" />
+                            <input onChange={(e) => setC_Pass(e.target.value)} type="password" placeholder="Confirm Password" className="mb-2 outline-none w-full p-4 border-2 rounded-lg border-gray-200 shadow bg-white" />
+                            <input onChange={(e) => setName(e.target.value)} type="text" placeholder="Name" className="mb-2 outline-none w-full p-4 border-2 rounded-lg border-gray-200 shadow bg-white" />
+                            <select onChange={(e) => setGender(e.target.value as "MALE" | "FEMALE")} className="outline-none w-full p-4 border-2 mb-2 rounded-lg border-gray-200 shadow bg-white">
                                 <option value="MALE">Male</option>
                                 <option value="FEMALE">Female</option>
                             </select>
-                            <input type="date" placeholder="DOB" className="mb-2 outline-none w-full p-4 border-2 rounded-lg border-gray-200 shadow bg-white" />
-                            <select className="outline-none w-full p-4 border-2 mb-2 rounded-lg border-gray-200 shadow bg-white">
+                            <input onChange={(e) => setDob(e.target.value)} type="date" placeholder="DOB" className="mb-2 outline-none w-full p-4 border-2 rounded-lg border-gray-200 shadow bg-white" />
+                            <select onChange={(e) => setBlood(e.target.value as "OP" | "ON" | "AP" | "AN" | "BP" | "BN" | "ABP" | "ABN")} className="outline-none w-full p-4 border-2 mb-2 rounded-lg border-gray-200 shadow bg-white">
                                 <option value="OP">O +ve</option>
                                 <option value="ON">O -ve</option>
                                 <option value="AP">A +ve</option>
@@ -40,9 +57,9 @@ const Signup = () => {
                                 <option value="ABP">AB +ve</option>
                                 <option value="ABN">AB -ve</option>
                             </select>
-                            <input type="number" placeholder="Weight in KG" className="mb-2 outline-none w-full p-4 border-2 rounded-lg border-gray-200 shadow bg-white" />
-                            <input type="number" placeholder="Height in CM" className="mb-2 outline-none w-full p-4 border-2 rounded-lg border-gray-200 shadow bg-white" />
-                            <textarea placeholder="Address" className="mb-2 outline-none w-full p-4 border-2 rounded-lg border-gray-200 shadow bg-white" />
+                            <input onChange={(e) => setWeight(parseInt(e.target.value))} type="number" placeholder="Weight in KG" className="mb-2 outline-none w-full p-4 border-2 rounded-lg border-gray-200 shadow bg-white" />
+                            <input onChange={(e) => setHeight(parseInt(e.target.value))} type="number" placeholder="Height in CM" className="mb-2 outline-none w-full p-4 border-2 rounded-lg border-gray-200 shadow bg-white" />
+                            <textarea onChange={(e) => setAddress(e.target.value)} placeholder="Address" className="mb-2 outline-none w-full p-4 border-2 rounded-lg border-gray-200 shadow bg-white" />
                         </>
                         : <div className="w-full">
                             <div className="w-full">
