@@ -15,7 +15,7 @@ const Signup = () => {
     const [name, setName] = useState<string>("");
     const [gender, setGender] = useState<"MALE" | "FEMALE">("MALE");
     const [dob, setDob] = useState<string>("");
-    const [blood, setBlood] = useState<"OP" | "ON" | "AP" | "AN" | "BP" | "BN" | "ABP" | "ABN">("OP");
+    const [blood, setBlood] = useState<string>("OP");
     const [weight, setWeight] = useState<number>(0);
     const [height, setHeight] = useState<number>(0);
     const [age, setAge] = useState<number>(0);
@@ -41,6 +41,7 @@ const Signup = () => {
                 email,
                 pass,
                 name,
+                age,
                 gender,
                 dob,
                 weight,
@@ -75,7 +76,7 @@ const Signup = () => {
                                 <option value="FEMALE">Female</option>
                             </select>
                             <input onChange={(e) => setDob(e.target.value)} type="date" placeholder="DOB" className="mb-2 outline-none w-full p-4 border-2 rounded-lg border-gray-200 shadow bg-white" />
-                            <select onChange={(e) => setBlood(e.target.value as "OP" | "ON" | "AP" | "AN" | "BP" | "BN" | "ABP" | "ABN")} className="outline-none w-full p-4 border-2 mb-2 rounded-lg border-gray-200 shadow bg-white">
+                            <select onChange={(e) => setBlood(e.target.value)} className="outline-none w-full p-4 border-2 mb-2 rounded-lg border-gray-200 shadow bg-white">
                                 <option value="O +ve">O +ve</option>
                                 <option value="O -ve">O -ve</option>
                                 <option value="A +ve">A +ve</option>

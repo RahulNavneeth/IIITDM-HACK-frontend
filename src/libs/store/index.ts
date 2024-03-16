@@ -1,4 +1,4 @@
-export { useMessageStore } from "./message"
-export { usePatientEmailStore } from "./patientEmail"
-export { usePatientStore } from "./patient"
-export { useOTPStore } from "./otp"
+export { UseMessageStore as useMessageStore } from "./message"
+export { UsePatientEmailStore as usePatientEmailStore } from "./patientEmail"
+export { UsePatientStore as usePatientStore } from "./patient"
+export { UseOTPStore as useOTPStore } from "./otp"

@@ -7,7 +7,7 @@ type PatientEmailType = {
     setEmail: (r: { email: string, name: string, uid: string }) => void
 }
 
-export const usePatientEmailStore = create<PatientEmailType>((set) => ({
+export const UsePatientEmailStore = create<PatientEmailType>((set) => ({
     email: "",
     name: "",
     uid: "",

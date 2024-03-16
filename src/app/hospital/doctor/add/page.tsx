@@ -6,7 +6,7 @@ import axios from "axios";
 import { useState } from "react";
 import { Spinner } from "@material-tailwind/react";
 
-const addDoctor = () => {
+const AddDoctor = () => {
     const [name, setName] = useState<string>('');
     const [uid, setUID] = useState<string>('');
     const [license, setLicense] = useState<number>(0);
@@ -62,4 +62,4 @@ const addDoctor = () => {
     )
 }
 
-export default addDoctor;
+export default AddDoctor;

@@ -58,6 +58,7 @@ const Patient = () => {
                             <div className="font-bold"> ADDRESS: </div>
                             <div className="ml-2 text-gray-700"> {usePatientData["address"]} </div>
                         </div>
+                        {localStorage.getItem("d_token") && <a href={"cp/timeline/add"}><button className="px-4 ml-3 py-2 rounded bg-blue-500 hover:bg-blue-600 text-white font-bold mt-4">Add data</button></a>}
                     </div>
                 </div>
             </div>
@@ -105,7 +106,6 @@ const Patient = () => {
                                 </table>
                             </div>
                             <a href={"cp/timeline"}><button className="px-4 py-2 rounded bg-blue-500 hover:bg-blue-600 text-white font-bold mt-10">View timeline</button></a>
-                            {localStorage.getItem("d_token") && <a href={"cp/timeline/add"}><button className="px-4 ml-3 py-2 rounded bg-blue-500 hover:bg-blue-600 text-white font-bold mt-4">Add treatment</button></a>}
                         </div>}
                         {select === "ALLERGIES" && <div className="w-full h-full bg-white p-6 rounded-md shadow-md">
                             <div className="list-decimal font-black text-2xl text-gray-800 mb-4"> CONDITIONS </div>

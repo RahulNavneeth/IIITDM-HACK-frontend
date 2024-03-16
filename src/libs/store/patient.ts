@@ -5,7 +5,7 @@ type PatientType = {
     setData: (r: any) => void
 }
 
-export const usePatientStore = create<PatientType>((set) => ({
+export const UsePatientStore = create<PatientType>((set) => ({
     data: null,
     setData: (r) => set({ data: r }),
 }))

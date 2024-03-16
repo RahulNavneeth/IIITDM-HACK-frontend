@@ -5,7 +5,7 @@ type MessageType = {
     setData: (r: { message: string, type: "error" | "success" | "info", show: boolean }) => void
 }
 
-export const useMessageStore = create<MessageType>((set) => ({
+export const UseMessageStore = create<MessageType>((set) => ({
     data: { message: '', type: 'info', show: false },
     setData: (r) => set({ data: r }),
 }))

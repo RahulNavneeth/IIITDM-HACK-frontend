@@ -1,7 +1,7 @@
 "use client"
 
 import { API_URL } from "@/libs/constants";
-import { useHospitalUIDStore, useMessageStore, usePatientStore } from "@/libs/store";
+import { useMessageStore, usePatientStore } from "@/libs/store";
 import axios from "axios";
 import { useState } from "react";
 import { useRouter } from "next/navigation"
@@ -46,6 +46,7 @@ const Login = () => {
             }
             if (type === "D") {
                 localStorage.setItem("d_uid", email);
+                localStorage.setItem("d_id", data["doctor_id"]);
                 router.push("/info");
                 return;
             }

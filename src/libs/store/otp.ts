@@ -5,7 +5,7 @@ type OTPType = {
     setIs: (r: boolean) => void
 }
 
-export const useOTPStore = create<OTPType>((set) => ({
+export const UseOTPStore = create<OTPType>((set) => ({
     is: false,
     setIs: (r) => set({ is: r }),
 }))
