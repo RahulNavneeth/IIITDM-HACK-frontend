@@ -5,7 +5,7 @@
 <img src="https://img.shields.io/badge/:bitspace-%23121011?style=for-the-badge&logoColor=%23ffffff&color=%23000000">
 <img src="https://img.shields.io/badge/vashisht-%23121011?style=for-the-badge&color=black">
 <img src="https://img.shields.io/badge/iiitdm-%23121011?style=for-the-badge&logoColor=%23ffffff&color=%23000000">
-<img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&color=black">
+<img src="https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&color=black" />
 </div>
 
 # Electronic Health Record (EHR) Frontend
