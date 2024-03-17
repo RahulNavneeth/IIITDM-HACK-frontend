@@ -1,30 +1,58 @@
 "use client"
 
 import { useParams } from "next/navigation"
+import { useEffect, useState } from "react";
+import { createClient } from '@supabase/supabase-js'
+import { Spinner } from "@material-tailwind/react";
 
 const MedicalFiles = () => {
     const s = useParams();
-    const id = s["id"]
     const date = s["date"]
-    console.log(id, date);
+    const [_data, setData] = useState<Array<any>>([])
+    const [loading, setLoading] = useState<boolean>(false)
+    const supabase = createClient("HERE", "HERE");
+    useEffect(() => {
+        const GET = async () => {
+            const { data } = await supabase
+                .storage
+                .from('EHR')
+                .list(`${date}`, {
+                    limit: 1000
+                })
+            setData(data || [])
+        }
+        GET();
+    }, [])
+    const handleDownload = async (file_name: string) => {
+        setLoading(true)
+        try {
+            const { data } = await supabase
+                .storage
+                .from('EHR')
+                .download(`${date}/${file_name}`);
+            const url = URL.createObjectURL(data || new Blob())
+            const a = document.createElement('a')
+            a.href = url
+            a.download = 'Employee.pdf'
+            document.body.appendChild(a)
+            a.click()
+            a.remove()
+        } catch (e) {
+            //
+        } finally {
+            setLoading(false)
+        }
+    }
     return (
         <div className="w-full h-full p-10 flex flex-col items-center justify-start bg-gray-50">
             <div className="font-black text-3xl text-gray-800 mb-8">Medical Files ({date})</div>
             <div className="sm:w-3/6 w-full flex flex-col gap-4">
-                <div className="w-full p-4 flex flex-row items-center justify-between rounded-lg shadow bg-white">
-                    <div className="font-semibold">File Name 1.pdf</div>
-                    <button className="px-4 py-2 rounded bg-blue-500 hover:bg-blue-600 text-white font-bold">Download</button>
-                </div>
-                {/* Repeat for other files */}
-                <div className="w-full p-4 flex flex-row items-center justify-between rounded-lg shadow bg-white">
-                    <div className="font-semibold">File Name 2.pdf</div>
-                    <button className="px-4 py-2 rounded bg-blue-500 hover:bg-blue-600 text-white font-bold">Download</button>
-                </div>
-                <div className="w-full p-4 flex flex-row items-center justify-between rounded-lg shadow bg-white">
-                    <div className="font-semibold">Blood Test Results.jpg</div>
-                    <button className="px-4 py-2 rounded bg-blue-500 hover:bg-blue-600 text-white font-bold">Download</button>
-                </div>
-                {/* Add more files as needed */}
+                {_data.map((file, index) => (
+                    <div key={index} className="w-full p-4 flex flex-row items-center justify-between rounded-lg shadow bg-white">
+                        <div className="font-semibold">{file["name"]}</div>
+                        <button onClick={() => handleDownload(file["name"])} className="px-4 py-2 rounded bg-blue-500 flex flex-col items-center justify-center hover:bg-blue-600 text-white font-bold">{loading ? <Spinner className="animate-spin h-6 w-6 text-blue-400" color="white" /> : "Download"}</button>
+                    </div>
+                ))}
             </div>
         </div>
     )
