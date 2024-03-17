@@ -4,6 +4,7 @@ import { usePatientStore } from "@/libs/store";
 import { useState } from "react";
 import axios from "axios";
 import { ResponsiveContainer, AreaChart, Area, XAxis, Tooltip } from 'recharts';
+import { API_URL } from "@/libs/constants";
 
 const Patient = () => {
     const [select, setSelect] = useState<"TREATMENTS" | "ALLERGIES" | "DATA" | "GRAPH" | "FILES">("DATA");
@@ -17,13 +18,11 @@ const Patient = () => {
     ]);
 
     const PData = usePatientStore((i) => i.data);
-    console.log(PData);
     const dob = new Date(PData["dob"]).toDateString()
-    console.log(PData);
 
     useEffect(() => {
         const GET = async () => {
-            const { data } = await axios.post("http://34.125.122.167:8080/api/ehr", {
+            const { data } = await axios.post(API_URL + "/patient/proxy", {
                 "gender": (PData["gender"] === "MALE" ? 1 : 0) || 1,
                 "age": parseInt(PData["age"]) || 55,
                 "smoking": parseInt(PData["smoking"]) || 1,

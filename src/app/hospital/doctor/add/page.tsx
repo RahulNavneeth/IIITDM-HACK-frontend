@@ -57,7 +57,7 @@ const AddDoctor = () => {
                     <input onChange={(e) => setLicense(parseInt(e.target.value))} type="number" placeholder="License No" className="mb-2 outline-none w-full p-4 border-2 rounded-lg border-gray-200 shadow bg-white" />
                 </>
                 <button onClick={handleSubmit} className="px-8 flex flex-col items-center mx-2 py-4 rounded bg-blue-500 hover:bg-blue-600 text-white font-bold w-full">{loading ?
-                    <Spinner className="animate-spin h-6 w-6 text-blue-400" /> : "Submit"}</button>
+                    <Spinner className="animate-spin h-6 w-6 text-blue-400" color="white" /> : "Submit"}</button>
             </div>
         </div>
     )

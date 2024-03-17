@@ -56,25 +56,6 @@ const TimelineAdd = () => {
     const handleGeneralSubmit = async () => {
         setG_Loading(true);
         try {
-            console.log({
-                email: PData["email"],
-                d_token: localStorage.getItem("d_token"),
-                uid: localStorage.getItem("d_uid"),
-                type: "D",
-                sugar: g_data[0],
-                bp: g_data[1],
-                rbc: g_data[2],
-                wbc: g_data[3],
-                hb: g_data[4],
-                platelets: g_data[5],
-                esr: g_data[6],
-                mcv: g_data[7],
-                heart_rate: g_data[8],
-                na: g_data[9],
-                k: g_data[10],
-                vitamin_d: g_data[11],
-                cholestrol: g_data[12]
-            });
             await axios.put(API_URL + "/doctor/update-record", {
                 email: PData["email"],
                 d_token: localStorage.getItem("d_token"),

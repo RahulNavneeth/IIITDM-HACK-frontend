@@ -6,6 +6,19 @@ const MedicalTimeline = () => {
     const PData = usePatientStore((i) => i.data);
     const [summary, setSummary] = useState<Array<[string, boolean]>>(Array(PData["treatments"].length).fill(["", false]));
 
+    async function query(data: any) {
+        const response = await fetch(
+            "https://api-inference.huggingface.co/models/facebook/bart-large-cnn",
+            {
+                headers: { Authorization: "Bearer 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" },
+                method: "POST",
+                body: JSON.stringify(data) + "\n GENERATE MEDICAL SUMMARY FROM THE ABOVE JSON DATA WITH PATIENT'S TREATMENT HISTORY",
+            }
+        );
+        const result = await response.json();
+        return result;
+    }
+
     return (
         <div className="w-full h-full p-10 flex flex-col items-center justify-start bg-gray-50">
             <h1 className="font-black text-3xl  mb-8">Patient Medical Timeline</h1>
@@ -25,22 +38,30 @@ const MedicalTimeline = () => {
                                         ))
                                     }</p>
                                     <p><strong>Type:</strong> {value["type"]}</p>
-                                    {summary[i][1] && <p><strong>Summary:</strong> {summary[i][0].length > 0 ? "WATHA" : "Generating..."}</p>}
+                                    {summary[i][1] && <p><strong>Summary:</strong> {summary[i][0].length > 0 ? summary[i][0] : "Generating... please wait"}</p>}
                                 </div>
                                 <div className="flex flex-row">
                                     <button onClick={() => {
                                         window.location.href = "/info/cp/" + value["treatment_id"] + "/files";
                                     }} className="mt-4 w-full py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-bold">View Files & Data</button>
-                                    <button onClick={() => {
+                                    <button onClick={async () => {
                                         let temp = [...summary];
                                         temp[i] = ["", true];
                                         setSummary(temp);
-                                        // TODO: ASWATH LLM
-                                        setTimeout(() => {
+                                        const data_data = ["SUGAR", "BP", "RBC", "WBC", "HB", "PLATELETS", "ESR", "MCV", "HEART RATE", "Na", "K", "VIT D", "CHOLESTROL"];
+                                        const inputs = {
+                                            ...PData["treatments"][i],
+                                            patient_existing_record: [data_data.map((v) => {
+                                                const f: any = {};
+                                                f[`${v}`] = (v === "HEART RATE" ? PData["heart_rate"] : v === "VIT D" ? PData["vit_d"] : PData[v.toLowerCase()]);
+                                                return { ...f }
+                                            })]
+                                        }
+                                        query({ inputs: inputs }).then((d) => {
                                             let temp = [...summary];
-                                            temp[i] = ["Watha", true];
+                                            temp[i] = [d[0]["summary_text"], true];
                                             setSummary(temp);
-                                        }, 2000)
+                                        })
                                     }} className="mt-4 w-full ml-2 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-bold">Get summary</button>
                                 </div>
                             </div>

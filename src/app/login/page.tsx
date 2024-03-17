@@ -52,7 +52,6 @@ const Login = () => {
             }
 
         } catch (e) {
-            console.log(e);
             MData({ type: "error", message: "Invalid credentials", show: true });
         } finally {
             setLoading(false);

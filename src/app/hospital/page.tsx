@@ -30,7 +30,6 @@ const Hospital = () => {
             remLoading.splice(idx, 1);
             setHospitalData(hospitalData);
             setRemLoading(remLoading);
-            console.log(data);
         } catch (e) {
             //
         } finally {
@@ -52,7 +51,6 @@ const Hospital = () => {
                     "h_token": localStorage.getItem("h_token"),
                     uid: localStorage.getItem("h_uid")
                 })
-                console.log(data);
                 setHospitalData(data[0]);
             } catch (e) {
                 //
