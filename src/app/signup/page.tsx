@@ -60,7 +60,7 @@ const Signup = () => {
     }
     return (
         <div>
-            <div className="w-full h-screen flex flex-col items-center justify-center">
+            <div className="w-full h-full flex flex-col items-center justify-center">
                 <div className="w-[90%] md:w-2/6 bg-white shadow-lg rounded-lg flex flex-col items-center justify-center p-4">
                     <h1 className="text-2xl font-bold mb-8">Signup</h1>
                     {!page ?
