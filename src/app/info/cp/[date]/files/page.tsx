@@ -10,7 +10,7 @@ const MedicalFiles = () => {
     const date = s["date"]
     const [_data, setData] = useState<Array<any>>([])
     const [loading, setLoading] = useState<boolean>(false)
-    const supabase = createClient("HERE", "HERE");
+    const supabase = createClient("https://qjpneuwevwrxutoruzkr.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFqcG5ldXdldndyeHV0b3J1emtyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTA0ODg2NTAsImV4cCI6MjAyNjA2NDY1MH0.81hUqF6RXFOQv9jJuP40j_Q6mG2nbOPb30TsHY1RBu4");
     useEffect(() => {
         const GET = async () => {
             const { data } = await supabase

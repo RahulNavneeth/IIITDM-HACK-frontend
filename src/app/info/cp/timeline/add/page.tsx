@@ -21,8 +21,8 @@ const TimelineAdd = () => {
     const [g_loading, setG_Loading] = useState<boolean>(false);
     const [c_loading, setC_Loading] = useState<boolean>(false);
 
-    const useMessageData = useMessageStore((i) => i.setData);
-    const usePatientData = usePatientStore((i) => i.data);
+    const MData = useMessageStore((i) => i.setData);
+    const PData = usePatientStore((i) => i.data);
 
     const [condition, setCondition] = useState<string>("");
     const [type, setType] = useState<number>(1);
@@ -36,7 +36,7 @@ const TimelineAdd = () => {
         setC_Loading(true);
         try {
             await axios.post(API_URL + "/doctor/add-condition", {
-                email: usePatientData["email"],
+                email: PData["email"],
                 d_token: localStorage.getItem("d_token"),
                 uid: localStorage.getItem("d_uid"),
                 type: "D",
@@ -44,10 +44,10 @@ const TimelineAdd = () => {
                 onset: date,
                 severity: type
             })
-            useMessageData({ type: "success", message: "General data added successfully", show: true });
+            MData({ type: "success", message: "General data added successfully", show: true });
             window.location.href = "/info/cp";
         } catch (e) {
-            useMessageData({ type: "error", message: "Error adding data", show: true });
+            MData({ type: "error", message: "Error adding data", show: true });
         } finally {
             setC_Loading(false);
         }
@@ -57,7 +57,7 @@ const TimelineAdd = () => {
         setG_Loading(true);
         try {
             console.log({
-                email: usePatientData["email"],
+                email: PData["email"],
                 d_token: localStorage.getItem("d_token"),
                 uid: localStorage.getItem("d_uid"),
                 type: "D",
@@ -76,7 +76,7 @@ const TimelineAdd = () => {
                 cholestrol: g_data[12]
             });
             await axios.put(API_URL + "/doctor/update-record", {
-                email: usePatientData["email"],
+                email: PData["email"],
                 d_token: localStorage.getItem("d_token"),
                 uid: localStorage.getItem("d_uid"),
                 type: "D",
@@ -94,10 +94,10 @@ const TimelineAdd = () => {
                 vitamin_d: g_data[11],
                 cholestrol: g_data[12]
             })
-            useMessageData({ type: "success", message: "General data added successfully", show: true });
+            MData({ type: "success", message: "General data added successfully", show: true });
             window.location.href = "/info/cp";
         } catch (e) {
-            useMessageData({ type: "error", message: "Error adding data", show: true });
+            MData({ type: "error", message: "Error adding data", show: true });
         } finally {
             setG_Loading(false);
         }
@@ -114,15 +114,15 @@ const TimelineAdd = () => {
                 in_time: t_in,
                 out_time: t_out,
                 pioneers: t_problems,
-                email: usePatientData["email"],
+                email: PData["email"],
                 d_token: localStorage.getItem("d_token"),
                 uid: localStorage.getItem("d_uid"),
                 type: "D"
             })
-            useMessageData({ type: "success", message: "Treatment added successfully", show: true });
+            MData({ type: "success", message: "Treatment added successfully", show: true });
             window.location.href = "/info/cp";
         } catch (e) {
-            useMessageData({ type: "error", message: "Error adding data", show: true });
+            MData({ type: "error", message: "Error adding data", show: true });
         } finally {
             setT_Loading(false);
         }
@@ -153,7 +153,7 @@ const TimelineAdd = () => {
                     <h1 className="text-xl w-full mt-6 font-bold mb-4">Pioneers <button className="text-blue-400" onClick={() => { setT_Problems([...t_problems, ""]); }}>+</button></h1>
                     <div className="w-full">
                         {t_problems.map((_, i) => (
-                            <div className="flex flex-row w-full">
+                            <div key={i} className="flex flex-row w-full">
                                 <input onChange={(e) => {
                                     let temp = t_problems;
                                     temp[i] = e.target.value;
@@ -173,6 +173,7 @@ const TimelineAdd = () => {
                     <div className="overflow-scroll h-[600px]">
                         {data_data.map((data, i) => (
                             <input
+                                key={i}
                                 onChange={(e) => {
                                     let temp = g_data;
                                     temp[i] = parseInt(e.target.value);

@@ -3,8 +3,8 @@ import { usePatientStore } from "@/libs/store";
 import { useState } from "react";
 
 const MedicalTimeline = () => {
-    const usePatientData = usePatientStore((i) => i.data);
-    const [summary, setSummary] = useState<Array<[string, boolean]>>(Array(usePatientData["treatments"].length).fill(["", false]));
+    const PData = usePatientStore((i) => i.data);
+    const [summary, setSummary] = useState<Array<[string, boolean]>>(Array(PData["treatments"].length).fill(["", false]));
 
     return (
         <div className="w-full h-full p-10 flex flex-col items-center justify-start bg-gray-50">
@@ -12,16 +12,16 @@ const MedicalTimeline = () => {
             <div className="flex flex-col w-full">
                 <section>
                     <div className="flex flex-col gap-4">
-                        {usePatientData["treatments"].map((value: any, i: number) => (
-                            <div className="flex flex-col bg-white rounded-lg shadow p-4">
+                        {PData["treatments"].map((value: any, i: number) => (
+                            <div key={i} className="flex flex-col bg-white rounded-lg shadow p-4">
                                 <div className="flex justify-between items-center">
                                     <h3 className="font-semibold">Date Range: {new Date(value["in_time"]).toDateString()} - {new Date(value["out_time"]).toDateString()}</h3>
                                     <span className="text-sm text-gray-500">Doctor ID - {value["doctor_id"]}</span>
                                 </div>
                                 <div className="mt-2">
                                     <p><strong>Pioneers:</strong> {
-                                        value["pioneers"].map((v: any, i: number) => (
-                                            <span key={i} className="text-blue-500">{v}{i !== value["pioneers"].length - 1 && ","} </span>
+                                        value["pioneers"].map((v: any, j: number) => (
+                                            <span key={j} className="text-blue-500">{v}{j !== value["pioneers"].length - 1 && ","} </span>
                                         ))
                                     }</p>
                                     <p><strong>Type:</strong> {value["type"]}</p>

@@ -14,8 +14,8 @@ const Login = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const router = useRouter();
 
-    const useMessageData = useMessageStore((i) => i.setData);
-    const usePatientData = usePatientStore((i) => i.setData);
+    const MData = useMessageStore((i) => i.setData);
+    const PData = usePatientStore((i) => i.setData);
 
     const handleSubmit = async () => {
         setLoading(true);
@@ -29,13 +29,13 @@ const Login = () => {
             })
             if (type === "H") localStorage.setItem(Object.entries(data)[1][0], Object.entries(data)[1][1] as string);
             else localStorage.setItem(Object.entries(data)[0][0], Object.entries(data)[0][1] as string)
-            useMessageData({ type: "success", message: "Logged in successfully", show: true });
+            MData({ type: "success", message: "Logged in successfully", show: true });
             if (type === "P") {
                 const { data } = await axios.post(API_URL + "/patient/get-patient", {
                     type: "P",
                     "p_token": localStorage.getItem("p_token")
                 })
-                usePatientData(data);
+                PData(data);
                 router.push("/info/cp");
                 return;
             }
@@ -53,7 +53,7 @@ const Login = () => {
 
         } catch (e) {
             console.log(e);
-            useMessageData({ type: "error", message: "Invalid credentials", show: true });
+            MData({ type: "error", message: "Invalid credentials", show: true });
         } finally {
             setLoading(false);
         }
@@ -72,7 +72,7 @@ const Login = () => {
                     </select>
                     <button onClick={handleSubmit} className="px-8 flex flex-col items-center mx-2 py-4 rounded bg-blue-500 hover:bg-blue-600 text-white font-bold w-full">{loading ? <Spinner className="animate-spin h-6 w-6 text-blue-400" color="white" /> : "Submit"}</button>
                 </div>
-                <a href="/signup" className="text-sm mt-10 text-blue-700">Don't have an account? Signup as a Patient</a>
+                <a href="/signup" className="text-sm mt-10 text-blue-700">Don&apos;t have an account? Signup as a Patient</a>
             </div>
         </div>
     )

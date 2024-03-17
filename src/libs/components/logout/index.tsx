@@ -4,12 +4,12 @@ import { useMessageStore } from "@/libs/store";
 import { usePathname, useRouter } from "next/navigation"
 
 const Logout = () => {
-    const useMessageData = useMessageStore((i) => i.setData);
+    const MData = useMessageStore((i) => i.setData);
     const pathname = usePathname();
     const router = useRouter();
     const handleLogout = () => {
         localStorage.clear();
-        useMessageData({ type: "success", message: "Logged out successfully", show: true });
+        MData({ type: "success", message: "Logged out successfully", show: true });
         router.push("/login");
     }
     if (pathname === "/login" || pathname === "/signup") return null;

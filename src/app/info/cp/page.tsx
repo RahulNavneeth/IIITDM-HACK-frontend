@@ -16,39 +16,39 @@ const Patient = () => {
         { date: '2022-01-04', disease: "disease", heartDisease: 18, kidney: 25, brain: 15, lung: 20, diabetes: 28 },
     ]);
 
-    const usePatientData = usePatientStore((i) => i.data);
-    console.log(usePatientData);
-    const dob = new Date(usePatientData["dob"]).toDateString()
-    console.log(usePatientData);
+    const PData = usePatientStore((i) => i.data);
+    console.log(PData);
+    const dob = new Date(PData["dob"]).toDateString()
+    console.log(PData);
 
     useEffect(() => {
         const GET = async () => {
             const { data } = await axios.post("http://34.125.122.167:8080/api/ehr", {
-                "gender": (usePatientData["gender"] === "MALE" ? 1 : 0) || 1,
-                "age": parseInt(usePatientData["age"]) || 55,
-                "smoking": parseInt(usePatientData["smoking"]) || 1,
-                "pp": parseInt(usePatientData["pp"]) || 0,
-                "allergy": parseInt(usePatientData["allergy"]) || 0,
-                "wheezing": parseInt(usePatientData["wheezing"]) || 0,
-                "alcohol": parseInt(usePatientData["alcohol"]) || 1,
-                "cp": parseInt(usePatientData["cp"]) || 0,
-                "bp": parseInt(usePatientData["bp"]) || 120,
-                "sugar": parseInt(usePatientData["sugar"]) || 100,
-                "bu": parseInt(usePatientData["bu"]) || 40,
-                "na": parseInt(usePatientData["na"]) || 140,
-                "k": parseInt(usePatientData["k"]) || 4,
-                "hb": parseInt(usePatientData["hb"]) || 15,
-                "rbc": parseInt(usePatientData["rbc"]) || 5,
-                "wbc": parseInt(usePatientData["wbc"]) || 8000,
-                "htn": parseInt(usePatientData["htn"]) || 1,
-                "appet": parseInt(usePatientData["appet"]) || 1,
-                "ane": parseInt(usePatientData["ane"]) || 0,
-                "hd": parseInt(usePatientData["hd"]) || 0,
-                "bmi": parseInt(usePatientData["bmi"]) || 25,
-                "chol": parseInt(usePatientData["chol"]) || 200,
-                "ca": parseInt(usePatientData["ca"]) || 0,
-                "thal": parseInt(usePatientData["thal"]) || 2,
-                "insulin": parseInt(usePatientData["insulin"]) || 10,
+                "gender": (PData["gender"] === "MALE" ? 1 : 0) || 1,
+                "age": parseInt(PData["age"]) || 55,
+                "smoking": parseInt(PData["smoking"]) || 1,
+                "pp": parseInt(PData["pp"]) || 0,
+                "allergy": parseInt(PData["allergy"]) || 0,
+                "wheezing": parseInt(PData["wheezing"]) || 0,
+                "alcohol": parseInt(PData["alcohol"]) || 1,
+                "cp": parseInt(PData["cp"]) || 0,
+                "bp": parseInt(PData["bp"]) || 120,
+                "sugar": parseInt(PData["sugar"]) || 100,
+                "bu": parseInt(PData["bu"]) || 40,
+                "na": parseInt(PData["na"]) || 140,
+                "k": parseInt(PData["k"]) || 4,
+                "hb": parseInt(PData["hb"]) || 15,
+                "rbc": parseInt(PData["rbc"]) || 5,
+                "wbc": parseInt(PData["wbc"]) || 8000,
+                "htn": parseInt(PData["htn"]) || 1,
+                "appet": parseInt(PData["appet"]) || 1,
+                "ane": parseInt(PData["ane"]) || 0,
+                "hd": parseInt(PData["hd"]) || 0,
+                "bmi": parseInt(PData["bmi"]) || 25,
+                "chol": parseInt(PData["chol"]) || 200,
+                "ca": parseInt(PData["ca"]) || 0,
+                "thal": parseInt(PData["thal"]) || 2,
+                "insulin": parseInt(PData["insulin"]) || 10,
             });
             _data.shift();
             let C = 30;
@@ -67,7 +67,7 @@ const Patient = () => {
             <div className="w-full flex flex-col sm:flex-row items-start justify-between">
                 <div className="w-full sm:w-2/6 flex flex-col items-center justify-center">
                     <img className="object-cover rounded-full w-[200px] h-[200px] shadow-lg" alt="patient-profile-picture"
-                        src={usePatientData["img_url"]} />
+                        src={PData["img_url"]} />
                     <button className="mt-4 underline text-blue-600 hover:text-blue-800"> Edit </button>
                 </div>
                 <div className="rounded-md w-full sm:w-4/6 p-6 bg-white shadow-md">
@@ -75,16 +75,16 @@ const Patient = () => {
                     <div>
                         <div className="flex flex-row items-center justify-start mt-4">
                             <div className="font-bold"> NAME: </div>
-                            <div className="ml-2 text-gray-700"> {usePatientData["name"]} </div>
+                            <div className="ml-2 text-gray-700"> {PData["name"]} </div>
                         </div>
                         <div className="w-full flex flex-row flex-wrap">
                             <div className="flex flex-row items-center justify-start mt-2 mr-10">
                                 <div className="font-bold"> AGE: </div>
-                                <div className="ml-2 text-gray-700"> {usePatientData["age"]} </div>
+                                <div className="ml-2 text-gray-700"> {PData["age"]} </div>
                             </div>
                             <div className="flex flex-row items-center justify-start mt-2 mr-10">
                                 <div className="font-bold"> GENDER: </div>
-                                <div className="ml-2 text-gray-700"> {usePatientData["gender"]} </div>
+                                <div className="ml-2 text-gray-700"> {PData["gender"]} </div>
                             </div>
                             <div className="flex flex-row items-center justify-start mt-2 mr-10">
                                 <div className="font-bold"> DOB: </div>
@@ -94,24 +94,24 @@ const Patient = () => {
                         <div className="w-full flex flex-row flex-wrap">
                             <div className="flex flex-row items-center justify-start mt-2 mr-10">
                                 <div className="font-bold"> WEIGHT: </div>
-                                <div className="ml-2 text-gray-700"> {usePatientData["weight"]} </div>
+                                <div className="ml-2 text-gray-700"> {PData["weight"]} </div>
                             </div>
                             <div className="flex flex-row items-center justify-start mt-2 mr-10">
                                 <div className="font-bold"> HEIGHT: </div>
-                                <div className="ml-2 text-gray-700"> {usePatientData["height"]} </div>
+                                <div className="ml-2 text-gray-700"> {PData["height"]} </div>
                             </div>
                             <div className="flex flex-row items-center justify-start mt-2 mr-10">
                                 <div className="font-bold"> BMI: </div>
-                                <div className="ml-2 text-gray-700"> {Math.trunc(usePatientData["weight"] * 10000 / (usePatientData["height"] * usePatientData["height"]))} </div>
+                                <div className="ml-2 text-gray-700"> {Math.trunc(PData["weight"] * 10000 / (PData["height"] * PData["height"]))} </div>
                             </div>
                         </div>
                         <div className="flex flex-row items-center justify-start mt-2 mr-10">
                             <div className="font-bold"> BLOOD GROUP </div>
-                            <div className="ml-2 text-gray-700">{usePatientData["bg"]} </div>
+                            <div className="ml-2 text-gray-700">{PData["bg"]} </div>
                         </div>
                         <div className="flex flex-row items-center justify-start mt-2">
                             <div className="font-bold"> ADDRESS: </div>
-                            <div className="ml-2 text-gray-700"> {usePatientData["address"]} </div>
+                            <div className="ml-2 text-gray-700"> {PData["address"]} </div>
                         </div>
                         {localStorage.getItem("d_token") && <a href={"cp/timeline/add"}><button className="px-4 ml-3 py-2 rounded bg-blue-500 hover:bg-blue-600 text-white font-bold mt-4">Add data</button></a>}
                     </div>
@@ -161,8 +161,8 @@ const Patient = () => {
                                         <th className="text-center">Type</th>
                                         <th className="text-center">Condition</th>
                                     </tr>
-                                    {usePatientData["treatments"].map((value: any, i: number) => (
-                                        <tr style={{ background: i % 2 ? "#f1f5f9" : "white" }} className="border-[2px] border-black">
+                                    {PData["treatments"].map((value: any, i: number) => (
+                                        <tr key={i} style={{ background: i % 2 ? "#f1f5f9" : "white" }} className="border-[2px] border-black">
                                             <td className="text-center">{value["treatment_name"]}</td>
                                             <td className="text-center">{value["type"]}</td>
                                             <td className="flex flex-col items-center justify-center">{value["condition"] <= 1 ? <div className="w-[20px] h-[20px] rounded-full bg-green-400" /> : value["condition"] < 3 ? <div className="w-[20px] h-[20px] rounded-full bg-yellow-400" /> : <div className="w-[20px] h-[20px] rounded-full bg-red-400" />}</td>
@@ -181,8 +181,8 @@ const Patient = () => {
                                         <th className="text-center">Onset Date</th>
                                         <th className="text-center">Severity</th>
                                     </tr>
-                                    {usePatientData["conditions"].map((value: any, i: number) => (
-                                        <tr style={{ background: (i % 2) ? "#f1f5f9" : "white" }} className="border-[2px] border-black">
+                                    {PData["conditions"].map((value: any, i: number) => (
+                                        <tr key={i} style={{ background: (i % 2) ? "#f1f5f9" : "white" }} className="border-[2px] border-black">
                                             <td className="text-center">{value["value"]}</td>
                                             <td className="text-center">{new Date(value["onset"]).toDateString()}</td>
                                             <td className="flex flex-col items-center justify-center">{value["severity"] <= 1 ? <div className="w-[20px] h-[20px] rounded-full bg-green-400" /> : value["severity"] < 3 ? <div className="w-[20px] h-[20px] rounded-full bg-yellow-400" /> : <div className="w-[20px] h-[20px] rounded-full bg-red-400" />}</td>
@@ -200,9 +200,9 @@ const Patient = () => {
                                         <th className="text-center">Value/Range</th>
                                     </tr>
                                     {Array(13).fill(0).map((_, i) => (
-                                        <tr style={{ background: i % 2 ? "#f1f5f9" : "white" }} className="border-[2px] border-black">
+                                        <tr key={i} style={{ background: i % 2 ? "#f1f5f9" : "white" }} className="border-[2px] border-black">
                                             <td className="text-center">{data_data[i]}</td>
-                                            <td className="text-center">{data_data[i] === "HEART RATE" ? usePatientData["heart_rate"] : data_data[i] === "VIT D" ? usePatientData["vit_d"] : usePatientData[data_data[i]?.toLowerCase()]} ({data_range[i]})</td>
+                                            <td className="text-center">{data_data[i] === "HEART RATE" ? PData["heart_rate"] : data_data[i] === "VIT D" ? PData["vit_d"] : PData[data_data[i]?.toLowerCase()]} ({data_range[i]})</td>
                                         </tr>
                                     ))}
                                 </table>
@@ -211,7 +211,7 @@ const Patient = () => {
                         {/* {select === "FILES" && <div className="w-full h-full bg-white p-6 rounded-md shadow-md">
                             <div className="font-black text-2xl text-gray-800 mb-4"> ALL MEDICAL FILES </div>
                             {Array(5).fill(0).map((_, i) => (
-                                <div className="w-full p-4 flex flex-row items-center mb-4 justify-between rounded-lg shadow bg-white">
+                                <div key={i} className="w-full p-4 flex flex-row items-center mb-4 justify-between rounded-lg shadow bg-white">
                                     <div className="font-semibold">File Name {i + 1}.pdf</div>
                                     <button className="px-4 py-2 rounded bg-blue-500 hover:bg-blue-600 text-white font-bold">Download</button>
                                 </div>

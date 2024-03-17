@@ -15,9 +15,9 @@ const OTP = () => {
 
     const router = useRouter();
 
-    const useMessage = useMessageStore((i) => i.setData);
-    const usePatientEmail = usePatientEmailStore((i) => i.email);
-    const usePatientName = usePatientEmailStore((i) => i.name);
+    const M = useMessageStore((i) => i.setData);
+    const PEmail = usePatientEmailStore((i) => i.email);
+    const PName = usePatientEmailStore((i) => i.name);
 
     const isSETOTP = useOTPStore((i) => i.setIs);
 
@@ -27,12 +27,12 @@ const OTP = () => {
             try {
                 const { data } = await axios.post(API_URL + "/auth/get-token", {
                     uid: localStorage.getItem("d_uid"),
-                    email: usePatientEmail,
+                    email: PEmail,
                     d_token: localStorage.getItem("d_token")
                 }, {
                     withCredentials: true
                 })
-                useMessage({ show: true, message: "Validated succesfully", type: "success" });
+                M({ show: true, message: "Validated succesfully", type: "success" });
                 localStorage.setItem("p_token", data["p_token"]);
                 isSETOTP(false);
                 router.push("/info/cp");
@@ -43,7 +43,7 @@ const OTP = () => {
             }
             return;
         }
-        useMessage({ show: true, message: "Invalid OTP", type: "error" });
+        M({ show: true, message: "Invalid OTP", type: "error" });
     }
 
     const handleRequest = async () => {
@@ -56,9 +56,9 @@ const OTP = () => {
                 d_token: localStorage.getItem("d_token"),
                 uid: localStorage.getItem("d_uid"),
                 type: "D",
-                email: usePatientEmail
+                email: PEmail
             })
-            useMessage({ show: true, message: "OTP sent to patient", type: "success" });
+            M({ show: true, message: "OTP sent to patient", type: "success" });
             setSndReq(true);
         } catch (e) {
             // 
@@ -71,7 +71,7 @@ const OTP = () => {
         return (
             <div className="w-full h-full">
                 <div className="w-full h-full p-10 flex flex-col items-center justify-center bg-gray-50">
-                    <div className="font-bold text-3xl text-gray-800 mb-8">Send request to &quot;{usePatientName}&quot; for gaining access</div>
+                    <div className="font-bold text-3xl text-gray-800 mb-8">Send request to &quot;{PName}&quot; for gaining access</div>
                     <div className="w-2/6 flex flex-col gap-4">
                         <button onClick={() => handleRequest()} className="flex flex-col items-center justify-center px-4 py-4 rounded bg-blue-500 hover:bg-blue-600 text-white font-bold">{!reqLoading ? "Request" : <Spinner className="animate-spin h-6 w-6 text-blue-400" color="white" />}</button>
                     </div>

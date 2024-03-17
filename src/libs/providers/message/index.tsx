@@ -4,9 +4,9 @@ import { Message } from "@/libs/components";
 import { useMessageStore } from "@/libs/store";
 
 const MessageProvider = () => {
-    const useMessage = useMessageStore((i) => i.data)
+    const M = useMessageStore((i) => i.data)
     return (
-        useMessage.show && <Message message={useMessage.message} type={useMessage.type} />
+        M.show && <Message message={M.message} type={M.type} />
     )
 }
 

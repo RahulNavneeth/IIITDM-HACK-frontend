@@ -15,7 +15,7 @@ const Info = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [initLoading, setInitLoading] = useState<boolean>(true);
 
-    const usePatientEmailData = usePatientEmailStore((i) => i.setEmail);
+    const PEmailData = usePatientEmailStore((i) => i.setEmail);
 
     useEffect(() => {
         const GET = async () => {
@@ -27,7 +27,7 @@ const Info = () => {
         GET()
     }, []);
 
-    const useMessageData = useMessageStore((i) => i.setData);
+    const MData = useMessageStore((i) => i.setData);
     const router = useRouter();
     const handleEmail = async () => {
         setLoading(true);
@@ -46,12 +46,12 @@ const Info = () => {
         }
     }
     const handlePatient = () => {
-        usePatientEmailData({ email: data[0]['email'], name: data[0]['name'], uid: data[0]['uid'] });
+        PEmailData({ email: data[0]['email'], name: data[0]['name'], uid: data[0]['uid'] });
         router.push("/info/cp");
     }
     useEffect(() => {
         if (!("d_token" in localStorage)) {
-            useMessageData({ type: "error", message: "You are not authorized", show: true });
+            MData({ type: "error", message: "You are not authorized", show: true });
             router.push("/login");
             return;
         } else {

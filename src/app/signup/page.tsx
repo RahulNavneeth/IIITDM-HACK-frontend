@@ -26,12 +26,12 @@ const Signup = () => {
 
     const [loading, setLoading] = useState<boolean>(false)
 
-    const useMessageData = useMessageStore((i) => i.setData);
+    const MData = useMessageStore((i) => i.setData);
 
     const handleSubmit = async () => {
         setLoading(true);
         if (pass !== c_pass) {
-            useMessageData({ type: "error", message: "Password and Confirm Password should be same", show: true });
+            MData({ type: "error", message: "Password and Confirm Password should be same", show: true });
             setLoading(false);
             return;
         }
@@ -50,7 +50,7 @@ const Signup = () => {
                 bg: blood,
                 img_url,
             })
-            useMessageData({ type: "success", message: "Signup successful", show: true });
+            MData({ type: "success", message: "Signup successful", show: true });
             window.location.href = "/login";
         } catch (e) {
             //
@@ -97,7 +97,7 @@ const Signup = () => {
                                     <h1 className="text-xl font-bold mb-4">Treatments <button className="text-blue-400" onClick={() => { setTreatment([...treatment, ""]); }}>+</button></h1>
                                     <div>
                                         {treatment.map((_, i) => (
-                                            <div className="flex flex-row">
+                                            <div key={i} className="flex flex-row">
                                                 <input type="text" placeholder={"Treatment " + (i + 1)} className="mb-2 outline-none w-full p-4 border-2 rounded-lg border-gray-200 shadow bg-white" />
                                                 {treatment.length > 1 && <button onClick={() => {
                                                     if (treatment.length === 1) return;
@@ -112,7 +112,7 @@ const Signup = () => {
                                     <h1 className="text-xl font-bold my-4">Allergies <button className="text-blue-400" onClick={() => { setAllergies([...allergies, ""]); }}>+</button></h1>
                                     <div className="w-full">
                                         {allergies.map((_, i) => (
-                                            <div className="flex flex-row">
+                                            <div key={i} className="flex flex-row">
                                                 <input type="text" placeholder={"Allergies " + (i + 1)} className="mb-2 outline-none w-full p-4 border-2 rounded-lg border-gray-200 shadow bg-white" />
                                                 {allergies.length > 1 && <button onClick={() => {
                                                     if (allergies.length === 1) return;

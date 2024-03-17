@@ -7,7 +7,7 @@ import { Spinner } from "@material-tailwind/react";
 const PatientLayout = ({ children }: Readonly<{ children: React.ReactNode; }>) => {
     const isOTP = useOTPStore((i) => i.is);
     const isSETOTP = useOTPStore((i) => i.setIs);
-    const usePatientData = usePatientStore((i) => i.data);
+    const PData = usePatientStore((i) => i.data);
     useEffect(() => {
         if (!("p_token" in localStorage)) {
             isSETOTP(true);
@@ -19,7 +19,7 @@ const PatientLayout = ({ children }: Readonly<{ children: React.ReactNode; }>) =
             <OTP />
         )
     }
-    if (!usePatientData) {
+    if (!PData) {
         return (
             <div className="w-screen h-screen flex items-center justify-center">
                 <div className="w-2/6 bg-white flex flex-col items-center justify-center p-4">

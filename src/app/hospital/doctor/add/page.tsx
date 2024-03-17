@@ -15,13 +15,13 @@ const AddDoctor = () => {
     const [specialization, setSpecialization] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
 
-    const useMessageData = useMessageStore((i) => i.setData);
+    const MData = useMessageStore((i) => i.setData);
 
     const handleSubmit = async () => {
         setLoading(true);
         try {
             if (pass !== c_pass) {
-                useMessageData({ type: "error", message: "Passwords do not match", show: true });
+                MData({ type: "error", message: "Passwords do not match", show: true });
                 return;
             }
             await axios.post(API_URL + "/hospital/add-doctor", {
@@ -35,7 +35,7 @@ const AddDoctor = () => {
                 specialization,
                 hospital_id: localStorage.getItem("h_uid")
             })
-            useMessageData({ type: "success", message: "Doctor added successfully", show: true });
+            MData({ type: "success", message: "Doctor added successfully", show: true });
             window.location.href = "/hospital";
         } catch (e) {
             //
@@ -56,7 +56,8 @@ const AddDoctor = () => {
                     <input onChange={(e) => setC_Pass(e.target.value)} type="password" placeholder="Confirm Password" className="mb-2 outline-none w-full p-4 border-2 rounded-lg border-gray-200 shadow bg-white" />
                     <input onChange={(e) => setLicense(parseInt(e.target.value))} type="number" placeholder="License No" className="mb-2 outline-none w-full p-4 border-2 rounded-lg border-gray-200 shadow bg-white" />
                 </>
-                <button onClick={handleSubmit} className="px-8 flex flex-col items-center mx-2 py-4 rounded bg-blue-500 hover:bg-blue-600 text-white font-bold w-full">{loading ? <Spinner className="animate-spin h-6 w-6 text-blue-400" color="white" /> : "Submit"}</button>
+                <button onClick={handleSubmit} className="px-8 flex flex-col items-center mx-2 py-4 rounded bg-blue-500 hover:bg-blue-600 text-white font-bold w-full">{loading ?
+                    <Spinner className="animate-spin h-6 w-6 text-blue-400" /> : "Submit"}</button>
             </div>
         </div>
     )

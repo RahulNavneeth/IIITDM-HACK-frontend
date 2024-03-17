@@ -17,7 +17,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     const pathname = usePathname()
-    const usePatientData = usePatientStore((i) => i.setData);
+    const PData = usePatientStore((i) => i.setData);
     useEffect(() => {
         const GET = async () => {
             if ("p_token" in localStorage) {
@@ -25,7 +25,7 @@ export default function RootLayout({
                     type: "P",
                     "p_token": localStorage.getItem("p_token")
                 })
-                usePatientData(data);
+                PData(data);
                 return;
             }
             if ("d_token" in localStorage) {

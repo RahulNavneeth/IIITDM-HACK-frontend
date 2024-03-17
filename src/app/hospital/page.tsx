@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { Spinner } from "@material-tailwind/react";
 
 const Hospital = () => {
-    const useMessageData = useMessageStore((i) => i.setData);
+    const MData = useMessageStore((i) => i.setData);
     const [hospitalData, setHospitalData] = useState<any>({})
     const [loading, setLoading] = useState<boolean>(true);
     const [remLoading, setRemLoading] = useState<Array<boolean>>(Array(100000).fill(false));
@@ -41,7 +41,7 @@ const Hospital = () => {
     }
     useEffect(() => {
         if (!("h_token" in localStorage)) {
-            useMessageData({ type: "error", message: "You are not authorized", show: true });
+            MData({ type: "error", message: "You are not authorized", show: true });
             router.push("/login");
             return;
         }
